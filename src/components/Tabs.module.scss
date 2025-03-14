@@ -1,0 +1,89 @@
+:root {
+  --tab-height: 152px;
+  --active-color: #ffffff;
+  --default-color: #ede6f2;
+  --primary-color: #844ca8;
+}
+
+@mixin tabSelected($bgColor, $skewX) {
+  position: absolute;
+  width: 35px;
+  height: var(--tab-height);
+  background: $bgColor;
+  transform: skewX($skewX);
+}
+
+.tabListCnt {
+  position: sticky;
+  top: 0;
+  border-radius: 35px 35px 0 0;
+  background-color: var(--default-color);
+  overflow: hidden;
+  z-index: 2;
+}
+
+.tabList {
+  position: relative;
+  display: flex;
+  border-radius: 35px 35px 0 0;
+  width: 100%;
+
+  .tabItem {
+    position: relative;
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    flex-basis: 20%;
+    height: var(--tab-height);
+    color: var(--primary-color);
+    font-size: 44px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .tabIcon {
+    width: 53px;
+    height: 53px;
+    margin-right: 23px;
+    margin-top: 3px;
+  }
+
+  .tabSelected {
+    position: absolute;
+    width: var(--tab-width);
+    height: var(--tab-height);
+    background: var(--active-color);
+    border-radius: 35px 35px 0 0;
+    box-shadow: 70px 117px 0 var(--active-color), -70px 117px 0 0 var(--active-color);
+    opacity: 1;
+    z-index: -1;
+    transition: .3s ease-in-out;
+
+    .left {
+      @include tabSelected(var(--default-color), -15deg);
+      left: -53px;
+      border-bottom-right-radius: 35px;
+    }
+
+    .right {
+      @include tabSelected(var(--default-color), 15deg);
+      right: -53px;
+      border-bottom-left-radius: 35px;
+    }
+  }
+
+  .tabSelected::before {
+    content: '';
+    @include tabSelected(var(--active-color), -15deg);
+    left: -18px;
+    border-top-left-radius: 35px;
+  }
+
+  .tabSelected::after {
+    content: '';
+    @include tabSelected(var(--active-color), 15deg);
+    right: -18px;
+    border-top-right-radius: 35px;
+  }
+} 
