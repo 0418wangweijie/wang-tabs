@@ -1,26 +1,38 @@
 {
-  "name": "wang-tabs-view",
+  "name": "wang-tabs",
   "version": "1.0.0",
-  "private": true,
   "type": "module",
-  "scripts": {
-    "build": "rsbuild build",
-    "dev": "rsbuild dev --open",
-    "preview": "rsbuild preview"
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
   },
-  "dependencies": {
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/0418wangweijie/wang-tabs.git"
+  },
+  "scripts": {
+    "build": "rslib build",
+    "dev": "rslib build --watch"
   },
   "devDependencies": {
-    "@rsbuild/core": "^1.2.16",
     "@rsbuild/plugin-react": "^1.1.1",
+    "@rsbuild/plugin-sass": "^1.2.2",
+    "@rslib/core": "^0.5.4",
     "@types/react": "^19.0.10",
-    "@types/react-dom": "^19.0.4",
-    "css-loader": "^6.8.1",
-    "postcss-loader": "^8.1.0",
     "postcss-pxtorem": "^6.1.0",
-    "style-loader": "^3.3.3",
+    "react": "^19.0.0",
+    "sass": "^1.85.1",
     "typescript": "^5.8.2"
+  },
+  "peerDependencies": {
+    "react": ">=16.9.0",
+    "react-dom": ">=16.9.0"
   }
 }
