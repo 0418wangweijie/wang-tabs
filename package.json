@@ -10,6 +10,8 @@
   },
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "keywords": ["ui components", "px to rem", "rsbuild"],
+  "author": "wangweijie",
   "files": [
     "dist"
   ],
