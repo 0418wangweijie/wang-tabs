@@ -3,7 +3,7 @@ import React, {JSX, useMemo} from 'react';
 import styles from './index.module.scss';
 
 interface Tab {
-    name: string; 
+    name: string;
     label: string;
     render: () => JSX.Element;
 }
@@ -16,20 +16,20 @@ interface TabsProps {
     rootStyle?: React.CSSProperties;
 }
 
-const SlopeTabs: React.FC<TabsProps> = ({tabList, activeTab, onTabChange,style,rootStyle}) => {
+const ElevatedSlopeTabs: React.FC<TabsProps> = ({tabList, activeTab, onTabChange,style, rootStyle}) => {
 
     const activeTabIndex = useMemo(() =>
             tabList?.findIndex((tab) => tab.name === activeTab)
         , [tabList, activeTab]);
 
     return (
-        <div className={styles.slopeTabsRoot} style={rootStyle}>
+        <div className={styles.elevatedSlopeTabsRoot} style={rootStyle}>
             <div className={styles.tabListCnt} style={style}>
             <div className={styles.tabList}>
                 {tabList.map((tab, index) => (
                     <div
                         key={index}
-                        className={styles.tabItem}
+                        className={`${styles.tabItem} ${activeTabIndex === index ? styles.selectTabItem : ''}`}
                         onClick={() => onTabChange(tab.name)}
                     >
                         {tab?.render ? tab.render() :<div>{tab.label}</div>}
@@ -51,5 +51,5 @@ const SlopeTabs: React.FC<TabsProps> = ({tabList, activeTab, onTabChange,style,r
     );
 };
 
-export default SlopeTabs;
+export default ElevatedSlopeTabs;
 

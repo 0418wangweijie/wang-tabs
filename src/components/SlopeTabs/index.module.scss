@@ -1,8 +1,8 @@
-:root {
+.slopeTabsRoot {
   --tab-height: 152px;
-  --active-color: #ffffff;
-  --default-color: #ede6f2;
-  --primary-color: #844ca8;
+  --active-color: #4096ff;
+  --primary-color: #bae0ff;
+  --font-color: #fff;
   --border-radius: 35px;
   --font-size: 44px;
 }
@@ -19,7 +19,7 @@
   position: sticky;
   top: 0;
   border-radius: var(--border-radius) var(--border-radius) 0 0;
-  background-color: var(--default-color);
+  background-color: var(--primary-color);
   overflow: hidden;
   z-index: 2;
 }
@@ -38,7 +38,7 @@
     align-items: center;
     flex-basis: 20%;
     height: var(--tab-height);
-    color: var(--primary-color);
+    color: var(--font-color);
     font-size: var(--font-size);
     font-weight: 600;
     cursor: pointer;
@@ -56,13 +56,13 @@
     transition: .3s ease-in-out;
 
     .left {
-      @include tabSelected(var(--default-color), -15deg);
+      @include tabSelected(var(--primary-color), -15deg);
       left: -53px;
       border-bottom-right-radius: var(--border-radius);
     }
 
     .right {
-      @include tabSelected(var(--default-color), 15deg);
+      @include tabSelected(var(--primary-color), 15deg);
       right: -53px;
       border-bottom-left-radius: var(--border-radius);
     }

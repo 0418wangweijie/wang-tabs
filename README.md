@@ -1,39 +1,63 @@
 # wang-tabs
 
-`wang-tabs` 是一个轻量级、可定制的 React 组件库，目前包含 `SlopeTabs` 选项卡组件，支持平滑的选中状态切换动画。适用于需要选项卡切换功能的 React 项目。
+`wang-tabs` 是一个轻量级、可定制的 React 组件库，包含多个选项卡组件，支持平滑的选中状态切换动画。适用于需要选项卡切换功能的 React 项目。
 
-## 组件列表
+## 样式处理
 
-- **SlopeTabs**：带有平滑动画效果的选项卡组件
+### SCSS 支持
 
-## 功能特性
+本项目使用 SCSS 进行样式编写，所有组件样式均采用模块化方式管理。您可以通过以下方式自定义样式：
 
-- **平滑动画**：选中状态带有平滑的滑动动画效果。
-- **高度可定制**：支持自定义样式和内容渲染。
-- **简单易用**：通过简单的配置即可快速集成到项目中。
-- **TypeScript 支持**：完全使用 TypeScript 编写，提供类型安全。
+1. 直接修改 SCSS 变量
+2. 通过 CSS 变量覆盖默认样式
+3. 使用 `style` 和 `rootStyle` props 传递自定义样式
 
-## 安装
+### 单位转换
 
-使用 npm 或 yarn 安装：
+为了更好的响应式支持，项目中使用了 `postcss-pxtorem` 插件将 px 单位自动转换为 rem 单位。转换规则如下：
+
+- 根字体大小 (rootValue): 28px
+- 转换精度 (unitPrecision): 5 位小数
+- 最小转换值 (minPixelValue): 2px
+
+这意味着在 SCSS 文件中编写的 px 值会在编译时自动转换为 rem 单位。例如：
+
+```scss
+// 输入
+.example {
+    width: 56px;
+}
+
+// 输出
+.example {
+    width: 2rem; /* 56px / 28px */
+}
+```
+
+---
+
+## SlopeTabs 组件
+
+### 功能特性
+
+- 平滑的选中状态切换动画
+- 高度可定制的样式
+- 简单的 API 设计
+- TypeScript 支持
+
+### 安装
 
 ```bash
 npm install wang-tabs
-```
-
-或
-
-```bash
+# 或
 yarn add wang-tabs
 ```
 
-## 使用示例
-
-以下是一个简单的使用示例：
+### 使用示例
 
 ```tsx
 import React, {useState} from 'react';
-import SlopeTabs from 'slope-tabs';
+import { SlopeTabs } from 'wang-tabs';
 
 const App: React.FC = () => {
     const [activeTab, setActiveTab] = useState('tab1');
@@ -53,13 +77,9 @@ const App: React.FC = () => {
         </div>
     );
 };
-
-export default App;
 ```
 
-## API 说明
-
-### Props
+### Props 说明
 
 | 属性名           | 类型                          | 必填 | 默认值 | 描述                                          |
 |---------------|-----------------------------|----|-----|---------------------------------------------|
@@ -67,8 +87,9 @@ export default App;
 | `activeTab`   | `string`                    | 是  | -   | 当前选中的选项卡名称。                                 |
 | `onTabChange` | `(tabName: string) => void` | 是  | -   | 选项卡切换时的回调函数，返回选中的选项卡名称。                     |
 | `style`       | `React.CSSProperties`       | 否  | -   | 自定义容器样式。                                    |
+| `rootStyle`   | `React.CSSProperties`       | 否  | -   | 自定义根容器样式。                                  |
 
-### `Tab` 类型
+### `Tab` 类型说明
 
 ```ts
 interface Tab {
@@ -78,37 +99,88 @@ interface Tab {
 }
 ```
 
-## 样式定制
-
-`SlopeTabs` 使用 SCSS 编写样式，你可以通过以下方式覆盖默认样式：
-
-1. 在你的项目可以更改的样式属性：
+### 样式定制
 
 | CSS 变量名          | 默认值      | 描述                     |
 |-------------------|-----------|------------------------|
 | `--tab-height`    | `152px`   | 选项卡高度                 |
-| `--active-color`  | `#ffffff` | 激活状态文字颜色             |
-| `--default-color` | `#ede6f2` | 默认状态文字颜色             |
-| `--primary-color` | `#844ca8` | 主色调（如背景色、边框色等）     |
+| `--active-color`  | `#4096ff` | 激活状态背景颜色             |
+| `--primary-color` | `#bae0ff` | 默认状态背景颜色             |
+| `--font-color`    | `#fff`    | 文字颜色                   |
 | `--border-radius` | `35px`    | 圆角大小                  |
 | `--font-size`     | `44px`    | 文字大小                  |
 
-2. 通过 `style` 属性传递自定义样式：
+---
+
+## ElevatedSlopeTabs 组件
+
+### 功能特性
+
+- 独特的立体视觉效果
+- 平滑的选中状态切换动画
+- 高度可定制的样式
+- TypeScript 支持
+
+### 使用示例
+
 ```tsx
-<SlopeTabs 
-    tabList={tabList}
-    activeTab={activeTab}
-    onTabChange={setActiveTab}
-    style={{
-        '--tab-height': '100px',
-        '--active-color': '#000000',
-        '--default-color': '#cccccc',
-        '--primary-color': '#ff0000',
-        '--border-radius': '10px',
-        '--font-size': '16px'
-    }}
-/>
-  ```
+import React, {useState} from 'react';
+import { ElevatedSlopeTabs } from 'wang-tabs';
+
+const App: React.FC = () => {
+    const [activeTab, setActiveTab] = useState('tab1');
+
+    const tabList = [
+        {name: 'tab1', label: 'Tab 1', render: () => <div>Content 1</div>},
+        {name: 'tab2', label: 'Tab 2', render: () => <div>Content 2</div>},
+    ];
+
+    return (
+        <div>
+            <ElevatedSlopeTabs
+                tabList={tabList}
+                activeTab={activeTab}
+                onTabChange={setActiveTab}
+            />
+        </div>
+    );
+};
+```
+
+### Props 说明
+
+| 属性名           | 类型                          | 必填 | 默认值 | 描述                                          |
+|---------------|-----------------------------|----|-----|---------------------------------------------|
+| `tabList`     | `Array<Tab>`                | 是  | -   | 选项卡列表，每个选项卡包含 `name`、`label` 和 `render` 方法。 |
+| `activeTab`   | `string`                    | 是  | -   | 当前选中的选项卡名称。                                 |
+| `onTabChange` | `(tabName: string) => void` | 是  | -   | 选项卡切换时的回调函数，返回选中的选项卡名称。                     |
+| `style`       | `React.CSSProperties`       | 否  | -   | 自定义容器样式。                                    |
+| `rootStyle`   | `React.CSSProperties`       | 否  | -   | 自定义根容器样式。                                  |
+
+### `Tab` 类型说明
+
+```ts
+interface Tab {
+    name: string;    // 选项卡唯一标识
+    label: string;   // 选项卡显示文本
+    render: () => JSX.Element; // 选项卡内容渲染函数
+}
+```
+
+### 样式定制
+
+| CSS 变量名                | 默认值      | 描述       |
+|-------------------------|-----------|----------|
+| `--tab-height`          | `152px`   | 选项卡高度    |
+| `--tab-container-height`| `172px`   | 选项卡容器高度  |
+| `--active-color`        | `#4096ff` | 激活状态背景颜色 |
+| `--font-color`          | `#FFFFFF` | 默认文字颜色   |
+| `--container-color`     | `#FFFFFF` | 容器背景颜色   |
+| `--primary-color`       | `#ffffff` | 默认状态背景颜色 |
+| `--border-radius`       | `35px`    | 圆角大小     |
+| `--font-size`           | `44px`    | 文字大小     |
+
+---
 
 ## 开发与贡献
 
