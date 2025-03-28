@@ -1,20 +1,8 @@
-import React, {JSX, useMemo} from 'react';
-// @ts-ignore
+import React, {useMemo} from 'react';
+
+import {TabsProps} from '@/env';
+
 import styles from './index.module.scss';
-
-interface Tab {
-    name: string; 
-    label: string;
-    render: () => JSX.Element;
-}
-
-interface TabsProps {
-    tabList: Tab[];
-    activeTab: string;
-    onTabChange: (tabName: string) => void;
-    style?: React.CSSProperties;
-    rootStyle?: React.CSSProperties;
-}
 
 const SlopeTabs: React.FC<TabsProps> = ({tabList, activeTab, onTabChange,style,rootStyle}) => {
 

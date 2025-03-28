@@ -1,22 +1,10 @@
-import React, {JSX, useMemo} from 'react';
-// @ts-ignore
+import React, {useMemo} from 'react';
+
+import {TabsProps} from '@/env';
+
 import styles from './index.module.scss';
 
-interface Tab {
-    name: string;
-    label: string;
-    render: () => JSX.Element;
-}
-
-interface TabsProps {
-    tabList: Tab[];
-    activeTab: string;
-    onTabChange: (tabName: string) => void;
-    style?: React.CSSProperties;
-    rootStyle?: React.CSSProperties;
-}
-
-const ElevatedSlopeTabs: React.FC<TabsProps> = ({tabList, activeTab, onTabChange,style, rootStyle}) => {
+const ElevatedSlopeTabs: React.FC<TabsProps> = ({tabList, activeTab, onTabChange, style, rootStyle}) => {
 
     const activeTabIndex = useMemo(() =>
             tabList?.findIndex((tab) => tab.name === activeTab)
@@ -25,28 +13,28 @@ const ElevatedSlopeTabs: React.FC<TabsProps> = ({tabList, activeTab, onTabChange
     return (
         <div className={styles.elevatedSlopeTabsRoot} style={rootStyle}>
             <div className={styles.tabListCnt} style={style}>
-            <div className={styles.tabList}>
-                {tabList.map((tab, index) => (
+                <div className={styles.tabList}>
+                    {tabList.map((tab, index) => (
+                        <div
+                            key={index}
+                            className={`${styles.tabItem} ${activeTabIndex === index ? styles.selectTabItem : ''}`}
+                            onClick={() => onTabChange(tab.name)}
+                        >
+                            {tab?.render ? tab.render() : <div>{tab.label}</div>}
+                        </div>
+                    ))}
                     <div
-                        key={index}
-                        className={`${styles.tabItem} ${activeTabIndex === index ? styles.selectTabItem : ''}`}
-                        onClick={() => onTabChange(tab.name)}
+                        className={styles.tabSelected}
+                        style={{
+                            transform: `translateX(${activeTabIndex * 100}%)`,
+                            width: `${100 / tabList.length}%`
+                        }}
                     >
-                        {tab?.render ? tab.render() :<div>{tab.label}</div>}
+                        <div className={styles.left}></div>
+                        <div className={styles.right}></div>
                     </div>
-                ))}
-                <div
-                    className={styles.tabSelected}
-                    style={{
-                        transform: `translateX(${activeTabIndex * 100}%)`,
-                        width:`${100/tabList.length}%`
-                    }}
-                >
-                    <div className={styles.left}></div>
-                    <div className={styles.right}></div>
                 </div>
             </div>
-        </div>
         </div>
     );
 };

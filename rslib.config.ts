@@ -39,7 +39,7 @@ export default defineConfig({
                     }),
                 ],
             },
-        }
+        },
     },
     plugins: [pluginReact(), pluginSass()],
 });

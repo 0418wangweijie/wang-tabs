@@ -9,7 +9,7 @@
     }
   },
   "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "types": "./dist/types/index.d.ts",
   "keywords": [
     "ui components",
     "px to rem",
@@ -25,7 +25,8 @@
   },
   "scripts": {
     "build": "rslib build",
-    "dev": "rslib build --watch"
+    "dev": "rslib build --watch",
+    "prepublishOnly": "npm run build"
   },
   "devDependencies": {
     "@rsbuild/plugin-react": "^1.1.1",
