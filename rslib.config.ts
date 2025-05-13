@@ -5,8 +5,8 @@ import {pluginSass} from "@rsbuild/plugin-sass";
 const postcssPxtorem = require("postcss-pxtorem");
 
 // 从环境变量获取配置
-const enablePxToRem = process.env.ENABLE_PX_TO_REM !== 'false';
-const rootValue = parseInt(process.env.PX_TO_REM_ROOT_VALUE || '16', 10);
+const enablePxToRem = import.meta.env?.ENABLE_PX_TO_REM !== 'false';
+const rootValue = parseInt(import.meta.env?.PX_TO_REM_ROOT_VALUE || '16', 10);
 
 export default defineConfig({
     source: {

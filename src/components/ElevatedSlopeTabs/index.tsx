@@ -6,6 +6,7 @@ import {
   extractNumericValue,
   generateClipPaths,
 } from "@/utils/styleUtils";
+import { isEqual } from "@/utils";
 
 import styles from "./index.module.scss";
 
@@ -35,8 +36,19 @@ const ElevatedSlopeTabs: React.FC<TabsProps> = ({
     before: "",
     after: "",
   });
+  // 使用 useRef 存储上一次的 rootStyle
+  const prevRootStyleRef = useRef(rootStyle);
 
   useEffect(() => {
+
+    // 比较当前 rootStyle 和上一次的引用
+    const isRootStyleChanged = !isEqual(rootStyle, prevRootStyleRef.current);
+    
+    if (!isRootStyleChanged) return;
+    
+    // 更新引用
+    prevRootStyleRef.current = rootStyle;
+
     const convertedStyle = convertStyleUnitsToRem({ ...rootStyle });
 
     // 如果没有高度设置，直接使用转换后的样式

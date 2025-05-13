@@ -7,7 +7,7 @@ export const convertStyleUnitsToRem = (styleObj: Record<string, any>): Record<st
   if (!styleObj) return {};
   
   const newStyle = { ...styleObj };
-  const rootValue = parseInt(process.env.PX_TO_REM_ROOT_VALUE || '16', 10);
+  const rootValue = parseInt(import.meta.env?.PX_TO_REM_ROOT_VALUE || '16', 10);
   
   Object.entries(newStyle).forEach(([key, value]) => {
     if (typeof value !== 'string') return;
@@ -39,7 +39,7 @@ export const extractNumericValue = (value: string | number): number => {
   
   const numValue = parseFloat(match[1]);
   const unit = match[2].toLowerCase();
-  const rootValue = parseInt(process.env.PX_TO_REM_ROOT_VALUE || '16', 10);
+  const rootValue = parseInt(import.meta.env?.PX_TO_REM_ROOT_VALUE || '16', 10);
   
   return unit === 'rem' ? numValue * rootValue : numValue;
 };
