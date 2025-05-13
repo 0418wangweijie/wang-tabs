@@ -19,6 +19,7 @@ const ElevatedSlopeTabs: React.FC<TabsProps> = ({
   activeTab,
   onTabChange,
   rootStyle = {},
+  children,
 }) => {
   const tabCount = tabList.length;
 
@@ -40,12 +41,11 @@ const ElevatedSlopeTabs: React.FC<TabsProps> = ({
   const prevRootStyleRef = useRef(rootStyle);
 
   useEffect(() => {
-
     // 比较当前 rootStyle 和上一次的引用
     const isRootStyleChanged = !isEqual(rootStyle, prevRootStyleRef.current);
-    
+
     if (!isRootStyleChanged) return;
-    
+
     // 更新引用
     prevRootStyleRef.current = rootStyle;
 
@@ -124,11 +124,13 @@ const ElevatedSlopeTabs: React.FC<TabsProps> = ({
     if (activeTabIndex === TABLE_START_INDEX) {
       return {
         borderTopRightRadius: style["--content-radius"] || DEFAULT_RIGHT_RADIUS,
+        borderTopLeftRadius: 0,
       };
     }
     if (activeTabIndex === tabCount) {
       return {
         borderTopLeftRadius: style["--content-radius"] || DEFAULT_LEFT_RADIUS,
+        borderTopRightRadius: 0,
       };
     }
     return {};
@@ -160,7 +162,13 @@ const ElevatedSlopeTabs: React.FC<TabsProps> = ({
             </div>
           ))}
         </div>
-        <div className={styles.contentWrap} style={getContentStyle} />
+        {children ? (
+          children
+        ) : (
+          <div className={styles.contentWrap} style={getContentStyle}>
+            {tabList[activeTabIndex - TABLE_START_INDEX]?.content}
+          </div>
+        )}
       </div>
     </div>
   );

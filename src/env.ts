@@ -16,6 +16,7 @@ export interface TabsProps {
     onTabChange: (tabName: string | number) => void; // 切换 Tab 时触发的回调函数
     style?: React.CSSProperties; // Tab 列表容器的可选样式
     rootStyle?: Record<string, any>; // 根元素的可选样式
+    children?: React.ReactNode; // Tab 内容的子元素
 }
 
 // 定义elveleatedSlopeTabs组件的属性结构
