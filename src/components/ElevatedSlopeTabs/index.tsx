@@ -9,7 +9,7 @@ const TABLE_START_INDEX: number = 1;
 const DEFAULT_LEFT_RADIUS: string = '0.5rem';
 const DEFAULT_RIGHT_RADIUS: string = '0.5rem';
 
-const TrapezoidTab: React.FC<TabsProps> = ({ 
+const ElevatedSlopeTabs: React.FC<TabsProps> = ({ 
   tabList = [], 
   activeTab, 
   onTabChange, 
@@ -124,4 +124,4 @@ const TrapezoidTab: React.FC<TabsProps> = ({
   );
 };
 
-export default TrapezoidTab;
+export default ElevatedSlopeTabs;
