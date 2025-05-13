@@ -31,7 +31,7 @@
     text-align: center;
     line-height: var(--tabs-height);
     z-index: 1;
-    width: calc(100% / var(--tab-count));
+    width: var(--tab-width,calc(100% / var(--tab-count)));
 
     .tabLabel {
       overflow: hidden;

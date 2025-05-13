@@ -100,7 +100,7 @@ const TrapezoidTab: React.FC<TabsProps> = ({
   return (
     <div 
       className={styles.elevatedSlopeTabsRoot}
-      style={{ ...style, '--tab-count': tabCount }}
+      style={{ ...style, ['--tab-count' as string]: tabCount }}
     >
       <div className={styles.elevatedSlopeTabs}>
         <div className={styles.tabs}>

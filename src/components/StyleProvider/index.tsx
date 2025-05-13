@@ -7,6 +7,7 @@ interface StyleProviderProps {
 }
 
 const StyleContext = createContext<StyleProviderProps>({
+  children: undefined as unknown as ReactNode,
   rootValue: 16,
   transformers: [],
 });
@@ -19,7 +20,7 @@ export const StyleProvider: React.FC<StyleProviderProps> = ({
   rootValue = 16 
 }) => {
   return (
-    <StyleContext.Provider value={{ transformers, rootValue }}>
+    <StyleContext.Provider value={{ transformers, rootValue, children }}>
       {children}
     </StyleContext.Provider>
   );

@@ -32,8 +32,8 @@ export default defineConfig({
     tools: {
         postcss: {
             postcssOptions: {
-                plugins: [
-                    ...(enablePxToRem ? postcssPxtorem({
+                plugins: enablePxToRem ? [
+                     postcssPxtorem({
                         rootValue,
                         unitPrecision: 5, // 转换后的 rem 值保留的小数位数
                         propList: ['*'], // 转换所有属性
@@ -41,8 +41,8 @@ export default defineConfig({
                         replace: true, // 是否直接替换 px 值
                         mediaQuery: false, // 是否转换媒体查询中的 px
                         minPixelValue: 1, // 最小转换值
-                    }) : []),
-                ],
+                    }),
+                ] : [],
             },
         },
     },
