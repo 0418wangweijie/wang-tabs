@@ -1,7 +1,12 @@
 import {pluginReact} from '@rsbuild/plugin-react';
 import {defineConfig} from '@rslib/core';
 import {pluginSass} from "@rsbuild/plugin-sass";
-import postcss_pxtorem from "postcss-pxtorem";
+
+const postcssPxtorem = require("postcss-pxtorem");
+
+// 从环境变量获取配置
+const enablePxToRem = process.env.ENABLE_PX_TO_REM !== 'false';
+const rootValue = parseInt(process.env.PX_TO_REM_ROOT_VALUE || '16', 10);
 
 export default defineConfig({
     source: {
@@ -28,15 +33,15 @@ export default defineConfig({
         postcss: {
             postcssOptions: {
                 plugins: [
-                    postcss_pxtorem({
-                        rootValue: 28, // 根字体大小，对应 rootFontSize: 28
+                    ...(enablePxToRem ? postcssPxtorem({
+                        rootValue,
                         unitPrecision: 5, // 转换后的 rem 值保留的小数位数
                         propList: ['*'], // 转换所有属性
                         selectorBlackList: [], // 不转换的选择器
                         replace: true, // 是否直接替换 px 值
                         mediaQuery: false, // 是否转换媒体查询中的 px
-                        minPixelValue: 2, // 最小转换值
-                    }),
+                        minPixelValue: 1, // 最小转换值
+                    }) : []),
                 ],
             },
         },

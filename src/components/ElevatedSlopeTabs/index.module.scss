@@ -1,126 +1,86 @@
 .elevatedSlopeTabsRoot {
-  --tab-container-height: 172px;
-  --tab-height-offset: 20px;
-  --tab-height: calc(var(--tab-container-height) - var(--tab-height-offset));
-  --active-color: #4096ff;
-  --font-color: #FFFFFF;
-  --container-color: #FFFFFF;
-  --primary-color: #bae0ff;
-  --border-radius: 35px;
-  --font-size: 44px;
+  --tabs-bg: linear-gradient(#cdd9fe, #e2e9fd);
+  --tabs-height: 50px;
+  --tabs-radius: 8px;
+  --tab-font-size: 16px;
+  --tab-clip-path-before: path('M 0,50 C 25,50 25,0 50,0 L 50, 50 Z');
+  --tab-clip-path-after: path('M 0,0 C 25,0 25,50 50,50 L 0, 50 Z');
+  --active-before-after-width: var(--tabs-height);
+  --active-filter: ''; //drop-shadow(-1px 0px 2px rgba(0, 0, 0, 0.7)) drop-shadow(1px 0px 2px rgba(0, 0, 0, 0.7))
+  --active-transition: ''; // .3s ease-in-out
+  --active-top: -6px;
+  --active-bg-color: #fff;
+  --active-height: var(--tabs-height);
+  --content-top: var(--active-top);
 }
 
-@mixin tabSelected($bgColor, $skewX,$mT) {
-  position: absolute;
-  width: calc(var(--tab-height) * 0.3);
-  height: var(--tab-height);
-  margin-top: $mT;
-  background: $bgColor;
-  transform: skewX($skewX);
-}
+.elevatedSlopeTabs {
+  margin: 0 auto;
 
-.tabListCnt {
-  position: sticky;
-  top: 0;
-  border-radius: var(--border-radius) var(--border-radius) 0 0;
-  background-color: var(--container-color);
-  overflow: hidden;
-  height: var(--tab-container-height);
-}
-
-.tabList {
-  position: relative;
-  display: flex;
-  border-radius: var(--border-radius) var(--border-radius) 0 0;
-  width: 100%;
-  height: var(--tab-height);
-  margin-top: var(--tab-height-offset);
-
-  .tabItem {
-    position: relative;
+  .tabs {
     display: flex;
-    flex: 1;
-    justify-content: center;
-    align-items: center;
-    flex-basis: 20%;
-    height: var(--tab-height);
-    color: var(--default-color);
-    font-size: var(--font-size);
-    font-weight: 600;
+    width: 100%;
+    border-radius: var(--tabs-radius) var(--tabs-radius) 0 0;
+    background: var(--tabs-bg);
+  }
+
+  .tab {
+    height: var(--tabs-height);
     cursor: pointer;
-    background: var(--primary-color);
-    border-radius: var(--border-radius) var(--border-radius) 0 0;
+    position: relative;
+    text-align: center;
+    line-height: var(--tabs-height);
+    z-index: 1;
+    width: calc(100% / var(--tab-count));
 
-    .tabLabel{
-      z-index: 4
+    .tabLabel {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
 
-  .tabSelected {
-    flex: 2;
+  .tab.active {
+    margin-top: var(--active-top);
+    height: var(--active-height);
+    background-color: #fff;
+    color: #4185ef;
+    transition: var(--active-transition);
+    border-top-left-radius: var(--active-left-radius);
+    border-top-right-radius: var(--active-right-radius);
+  }
+
+  .tab.active:before {
+    display: var(--active-before-display, flex);
+    content: '';
     position: absolute;
-    width: calc(var(--tab-height) * 1.2);
-    height: var(--tab-container-height);
-    background: var(--active-color);
-    border-radius: var(--border-radius) var(--border-radius) 0 0;
-    box-shadow:
-            calc(var(--tab-height) * 0.46) calc(var(--tab-height) * 0.77) 0 var(--active-color),
-            calc(var(--tab-height) * -0.46) calc(var(--tab-height) * 0.77) 0 0 var(--active-color);
-    opacity: 1;
-    z-index: 2;
-    transition: .3s ease-in-out;
-    margin-top: calc(-1 * var(--tab-height-offset));
     top: 0;
-
-    .left {
-      @include tabSelected(var(--primary-color), -15deg, var(--tab-height-offset));
-      left: calc(var(--tab-height) * -0.40);
-      border-bottom-right-radius: var(--border-radius);
-      //box-shadow: inset -5px 0 0 rgba(0, 0, 0, 0.15);
-    }
-
-    .right {
-      @include tabSelected(var(--primary-color), 15deg, var(--tab-height-offset));
-      right: calc(var(--tab-height) * -0.40);
-      border-bottom-left-radius: var(--border-radius);
-      //box-shadow: inset  5px 0 0 rgba(0, 0, 0, 0.15);
-    }
+    left: calc(-1 * var(--tabs-height) + 1px);
+    height: 100%;
+    width: var(--active-before-after-width);
+    z-index: 2;
+    background-color: var(--active-bg-color, #fff);
+    clip-path: var(--tab-clip-path-before);
   }
 
-  .tabSelected::before {
+  .tab.active:after {
+    display: var(--active-after-display, flex);
     content: '';
-    @include tabSelected(var(--active-color), -15deg, 0);
-    left: calc(var(--tab-height) * -0.03);
-    border-top-left-radius: var(--border-radius);
+    position: absolute;
+    top: 0;
+    right: calc(-1 * var(--tabs-height) + 1px);
+    height: 100%;
+    width: var(--active-before-after-width);
+    z-index: 2;
+    background-color: var(--active-bg-color, #fff);
+    clip-path: var(--tab-clip-path-after);
   }
 
-  .tabSelected::after {
-    content: '';
-    @include tabSelected(var(--active-color), 15deg, 0);
-    right: calc(var(--tab-height) * -0.03);
-    border-top-right-radius: var(--border-radius);
-  }
-
-  .selectTabItem{
-    border-radius: 0;
-    background: var(--active-color);
-    z-index: 4;
-  }
-
-  // 选中tab左侧的tabItem
-  .selectTabItem + .tabItem {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-  }
-
-  // 选中tab右侧的tabItem
-  .tabItem + .selectTabItem {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-  }
-
-  .tabItem + .selectTabItem {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
+  .contentWrap {
+    margin-top: calc(var(--content-top));
+    min-height: 200px;
+    background-color: #fff;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
   }
 }
